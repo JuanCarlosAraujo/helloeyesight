@@ -1,27 +1,27 @@
 [
     {
-     "Codigo": 7.70238613016877E+25,
+     "Codigo": "7702386130168",
      "Producto": "CAFE LA BASTILLA  125 G",
-     "Valor": 2875
+     "Valor": "2875"
     },
     {
-     "Codigo": 997,
+     "Codigo": "997",
      "Producto": "Producto Practicas (No borrar)",
-     "Valor": 115
+     "Valor": "115"
     },
     {
-     "Codigo": 7702097066947,
+     "Codigo": "7702097066947",
      "Producto": "MERMELADA DE PI�A LA CONSTA 90G",
-     "Valor": 1265
+     "Valor": "1265"
     },
     {
-     "Codigo": 7702432005006,
+     "Codigo": "7702432005006",
      "Producto": "COMAPAN TAJADO PE",
-     "Valor": 2185
+     "Valor": "2185"
     },
     {
-     "Codigo": 7702303004787,
+     "Codigo": "7702303004787",
      "Producto": "CIGARRILLOS MUSTANG  UND",
-     "Valor": 3795
+     "Valor": "3795"
     }
 ]
