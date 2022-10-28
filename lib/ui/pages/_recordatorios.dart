@@ -7,6 +7,7 @@ class Recordatorio extends StatefulWidget {
   @override
   State<Recordatorio> createState() => _Recordatorio();
 }
+// andres es una puta zorra
 
 class _Recordatorio extends State<Recordatorio> {
   Widget build(BuildContext context) {
