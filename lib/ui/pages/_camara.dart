@@ -1,16 +1,16 @@
 //import 'package:helloeyesight/ui/pages/login.dart';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 //import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import 'dart:io';
 
-<<<<<<< HEAD
-//8
 String sexo = "";
 Map datosMapeados = {};
 
-=======
->>>>>>> c2a8a3836fe1bad58aee47d163aa4c7b3f99cc70
 class Camara extends StatefulWidget {
   const Camara({super.key});
 
@@ -22,132 +22,58 @@ class _Camara extends State<Camara> {
   File? imagen = null;
   final picker = ImagePicker();
 
-  Future selImagen(op) async {
-    var pickedFile;
-
-    if (op == 1) {
-      // ignore: deprecated_member_use
-      final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    } else {
-      // ignore: deprecated_member_use
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  Future selImagen() async {
+    final ImagePicker _picker = ImagePicker();
+    var image = await _picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      var imagen = File(image.path);
+      MandarResultado(convert.base64Encode(imagen.readAsBytesSync()));
+      TraerResultado();
     }
-
-    setState(() {
-      if (pickedFile != null) {
-        imagen = File(pickedFile.path);
-      } else {
-        print('no se ha seleccionado una foto');
-      }
-    });
   }
 
-  opciones(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            contentPadding: EdgeInsets.all(0),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      selImagen(1);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                            'Tomar una Foto',
-                            style: TextStyle(fontSize: 16),
-                          )),
-                          Icon(
-                            Icons.camera_alt,
-                            color: Colors.blue,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      selImagen(2);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(width: 1, color: Colors.blue))),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                            'Seleccionar una Foto',
-                            style: TextStyle(fontSize: 16),
-                          )),
-                          Icon(
-                            Icons.image,
-                            color: Colors.blue,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(color: Colors.red),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                            'Cancelar',
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                            textAlign: TextAlign.center,
-                          )),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
+  Future<void> MandarResultado(var imagen) async {
+    var response = await http.post(
+        Uri.parse("http://192.168.5.190/proyectos%20php/imagen"),
+        body: {"imagen": imagen.toString()});
+  }
+
+  Future<void> TraerResultado() async {
+    var response =
+        await http.get(Uri.parse("http://192.168.5.190/proyectos%20php/datos"));
+    if (response.statusCode == 200) {
+      Map jsonResponse = convert.jsonDecode(response.body);
+      datosMapeados = jsonResponse;
+      if (datosMapeados['genero'] == null) {
+      } else {
+        sexo = datosMapeados['genero'];
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    selImagen();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Ruta de la Camara"),
-      ),
-      body: ListView(children: [
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  opciones(context);
-                },
-                child: Text('Seleccione una imagen!'),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              imagen != null ? Image.file(imagen!) : Center()
-            ],
-          ),
-        )
-      ]), //ada
-    );
+        appBar: AppBar(
+          title: Text("Ruta de la Camara"),
+        ),
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[Text(sexo), confirmar(context)])) //ada
+        );
+  }
+
+  Widget confirmar(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+            onPrimary: Colors.black,
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20)),
+        onPressed: () {
+          setState(() {});
+        },
+        child: Text("confirmar"));
   }
 }
