@@ -41,6 +41,7 @@ dependencies:
   file_picker: ^5.2.1
   image_picker: ^0.8.6
   html: ^0.15.0
+  path_provider: ^1.6.18
   
 
 dev_dependencies:
@@ -72,6 +73,7 @@ flutter:
     - lib/assets/helloeyesight.png
     - lib/assets/images/
     - lib/assets/images/helloeyesight.png
+    - lib/assets/data/BarCodeProducts.json
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
