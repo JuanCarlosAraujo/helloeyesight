@@ -1,6 +1,7 @@
 import 'package:helloeyesight/ui/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'dart:convert' as convert;
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key});
@@ -88,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     /// open screen
     if (!_screenOpened) {
       final String code = barcode.rawValue ?? "---";
+
       debugPrint('Barcode found! $code');
       _screenOpened = true;
       Navigator.push(
