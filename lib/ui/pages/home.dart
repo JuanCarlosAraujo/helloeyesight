@@ -1,10 +1,13 @@
 //import 'package:helloeyesight/ui/pages/lista.dart';
 import 'package:flutter/material.dart';
 import 'package:helloeyesight/ui/pages/_camara.dart';
+import 'package:helloeyesight/domain/modelo/productBarCode.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloeyesight/ui/pages/_recordatorios.dart';
 import 'package:helloeyesight/ui/pages/_scannerQrCb.dart';
+
+ProviderMenu menu = ProviderMenu();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -119,7 +122,7 @@ class _HomeState extends State<Home> {
                             height: 100,
                             child: Center(
                               child: Text(
-                                'OPCION',
+                                'Prueba',
                                 textAlign: TextAlign.center,
                               ),
                             )),
@@ -127,6 +130,7 @@ class _HomeState extends State<Home> {
                           shadowColor: Colors.green,
                         ),
                         onPressed: () => {
+                          menu.loadData("aqui va el codigo pinche puta"),
                           // para lanzar a otra ventana
                           print("BOTON: ")
                         },

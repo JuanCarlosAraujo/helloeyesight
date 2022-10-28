@@ -1,19 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
-class _ProviderMenu {
-  _ProviderMenu() {
-    loadData();
-  }
+class ProviderMenu {
+  var nombreProducto;
+  var precioProducto;
 
-  Future loadData() async {
+  ProviderMenu() {}
+
+  Future loadData(String codigo) async {
     final value =
         await rootBundle.loadString('lib/assets/data/BarCodeProducts.json');
-    Map<String, String> datos = json.decode(value);
-    return datos;
+    List<dynamic> jsonResponse = jsonDecode(value);
+    for (var item in jsonResponse) {
+      if (item['Codigo'] == codigo) {
+        nombreProducto = item['Producto'];
+        precioProducto = item['Valor'];
+      }
+    }
   }
-
-  void SearchProduct(Map datos) {}
 }
-
-final menuProvider = _ProviderMenu();
