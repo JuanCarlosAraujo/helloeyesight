@@ -38,10 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   mobile_scanner: ^2.0.0
   path: ^1.8.2
-  file_picker: ^5.2.1
   image_picker: ^0.8.6
   html: ^0.15.0
-  path_provider: ^1.6.18
+  http: ^0.13.5
   
 
 dev_dependencies:

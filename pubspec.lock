@@ -64,20 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
-  ffi:
-    dependency: transitive
-    description:
-      name: ffi
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
-  file_picker:
-    dependency: "direct main"
-    description:
-      name: file_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.2.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -115,7 +101,7 @@ packages:
     source: hosted
     version: "0.15.1"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -280,13 +266,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  win32:
-    dependency: transitive
-    description:
-      name: win32
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
 sdks:
   dart: ">=2.18.1 <3.0.0"
   flutter: ">=3.0.0"
