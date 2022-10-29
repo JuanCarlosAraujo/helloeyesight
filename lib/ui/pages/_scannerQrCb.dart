@@ -1,7 +1,12 @@
-import 'package:helloeyesight/ui/pages/login.dart';
 import 'package:flutter/material.dart';
+import 'package:helloeyesight/domain/modelo/productBarCode.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'dart:convert' as convert;
+
+ProviderMenu lecturaCodigo = ProviderMenu();
+var codigo = "";
+var nombreProducto = null;
+var precioProducto = null;
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key});
@@ -12,7 +17,6 @@ class Scanner extends StatefulWidget {
 
 class _Scanner extends State<Scanner> {
   static const customSwatch = Colors.blue;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -89,8 +93,10 @@ class _MyHomePageState extends State<MyHomePage> {
     /// open screen
     if (!_screenOpened) {
       final String code = barcode.rawValue ?? "---";
+      codigo = code;
 
       debugPrint('Barcode found! $code');
+
       _screenOpened = true;
       Navigator.push(
           context,
@@ -143,7 +149,7 @@ class _FoundCodeScreenState extends State<FoundCodeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Scanned Code:",
+                "Producto",
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -151,16 +157,21 @@ class _FoundCodeScreenState extends State<FoundCodeScreen> {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                widget.value,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
+              Producto(double.parse(codigo))
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget Producto(var codigo) {
+  lecturaCodigo.loadData(codigo);
+  nombreProducto = lecturaCodigo.nombreProducto;
+  precioProducto = lecturaCodigo.precioProducto;
+  return Column(children: [
+    Text('Nombre del producto $nombreProducto'),
+    Text('Precio aproximado $nombreProducto')
+  ]);
 }
