@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helloeyesight/domain/modelo/productBarCode.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:convert' as convert;
 
 ProviderMenu lecturaCodigo = ProviderMenu();
