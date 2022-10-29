@@ -24,7 +24,7 @@ class _ResultadosAPIState extends State<ResultadosAPI> {
   // ignore: non_constant_identifier_names
   Future<void> TraerResultado() async {
     var response = await http.get(Uri.parse(
-        "https://c654-186-169-62-198.ngrok.io/proyectos%20php/datos"));
+        "https://57ba-186-169-58-119.ngrok.io/proyectos%20php/datos"));
     if (response.statusCode == 200) {
       Map jsonResponse = convert.jsonDecode(response.body);
       datosMapeados = jsonResponse;
@@ -53,7 +53,8 @@ class _ResultadosAPIState extends State<ResultadosAPI> {
               Edad(context),
               Emocion(context),
               Raza(context)
-            ])) //ada
+            ]))
+        //ada
         );
   }
 }
