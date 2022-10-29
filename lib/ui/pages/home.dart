@@ -1,6 +1,7 @@
 //import 'package:helloeyesight/ui/pages/lista.dart';
 import 'package:flutter/material.dart';
-import 'package:helloeyesight/ui/pages/_camara.dart';
+import 'package:helloeyesight/ui/pages/_faceRecognition.dart';
+import 'package:camera/camera.dart';
 import 'package:helloeyesight/domain/modelo/productBarCode.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -44,10 +45,17 @@ class _HomeState extends State<Home> {
                         style: ElevatedButton.styleFrom(
                           shadowColor: Colors.green,
                         ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Camara())),
+                        onPressed: () async {
+                          await availableCameras().then(
+                            (value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FaceRecognition(
+                                  cameras: value,
+                                ),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ),
