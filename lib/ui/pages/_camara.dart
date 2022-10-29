@@ -1,5 +1,6 @@
 //import 'package:helloeyesight/ui/pages/login.dart';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 //import 'package:file_picker/file_picker.dart';
@@ -29,13 +30,13 @@ class _Camara extends State<Camara> {
   }
 
   Future<void> CambiarVista() async {
-    selImagen().whenComplete(() => Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ResultadosAPI())));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ResultadosAPI()));
   }
 
   Future<void> MandarResultado(var imagen) async {
     var response = await http.post(
-        Uri.parse("https://c654-186-169-62-198.ngrok.io/proyectos%20php/datos"),
+        Uri.parse("https://57ba-186-169-58-119.ngrok.io/proyectos%20php/datos"),
         body: {"imagen": imagen.toString()});
   }
 
