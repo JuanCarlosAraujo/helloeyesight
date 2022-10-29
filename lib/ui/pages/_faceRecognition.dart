@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:helloeyesight/domain/modelo/modeloFaceRecognition.dart';
+import 'package:helloeyesight/ui/pages/resultadosAPI.dart';
 import 'dart:convert' as convert;
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -47,7 +48,10 @@ class _FaceRecognitionState extends State<FaceRecognition> {
     var image = await controller.takePicture();
     if (image != null) {
       var imagen = File(image.path);
-      EnviarImagen(convert.base64Encode(imagen.readAsBytesSync()));
+      EnviarImagen(convert.base64Encode(imagen.readAsBytesSync()))
+          .whenComplete(() => TraerResultado());
+      await TraerResultado().then((value) => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ResultadosAPI())));
     }
   }
 
