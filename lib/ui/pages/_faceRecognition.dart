@@ -28,7 +28,7 @@ class _FaceRecognitionState extends State<FaceRecognition> {
     super.initState();
     controller = CameraController(
       widget.cameras![0],
-      ResolutionPreset.max,
+      ResolutionPreset.low,
     );
     controller.initialize().then((_) {
       if (!mounted) {
