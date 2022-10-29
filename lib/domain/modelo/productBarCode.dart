@@ -7,7 +7,7 @@ class ProviderMenu {
 
   ProviderMenu() {}
 
-  Future loadData(String codigo) async {
+  Future loadData(var codigo) async {
     final value =
         await rootBundle.loadString('lib/assets/data/BarCodeProducts.json');
     List<dynamic> jsonResponse = jsonDecode(value);
@@ -15,6 +15,8 @@ class ProviderMenu {
       if (item['Codigo'] == codigo) {
         nombreProducto = item['Producto'];
         precioProducto = item['Valor'];
+        print(nombreProducto);
+        print(precioProducto);
       }
     }
   }

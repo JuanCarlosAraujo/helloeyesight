@@ -7,8 +7,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:helloeyesight/ui/pages/_recordatorios.dart';
 import 'package:helloeyesight/ui/pages/_scannerQrCb.dart';
 
-ProviderMenu menu = ProviderMenu();
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -130,7 +128,6 @@ class _HomeState extends State<Home> {
                           shadowColor: Colors.green,
                         ),
                         onPressed: () => {
-                          menu.loadData("aqui va el codigo pinche puta"),
                           // para lanzar a otra ventana
                           print("BOTON: ")
                         },
