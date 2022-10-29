@@ -48,8 +48,8 @@ class _FaceRecognitionState extends State<FaceRecognition> {
     var image = await controller.takePicture();
     if (image != null) {
       var imagen = File(image.path);
-      EnviarImagen(convert.base64Encode(imagen.readAsBytesSync()))
-          .whenComplete(() => TraerResultado());
+      EnviarImagen(convert.base64Encode(imagen.readAsBytesSync()));
+
       await TraerResultado().then((value) => Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ResultadosAPI())));
     }

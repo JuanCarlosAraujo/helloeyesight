@@ -4,6 +4,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:convert' as convert;
 
+FlutterTts flutterTts = FlutterTts();
 ProviderMenu lecturaCodigo = ProviderMenu();
 var codigo = "";
 var nombreProducto = null;
@@ -116,6 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+void speak(String texto) async {
+  await flutterTts.setLanguage('es-US');
+  await flutterTts.setPitch(1);
+  await flutterTts.speak(texto);
+}
+
 class FoundCodeScreen extends StatefulWidget {
   final String value;
   final Function() screenClosed;
@@ -173,6 +180,9 @@ class _FoundCodeScreenState extends State<FoundCodeScreen> {
 Widget Producto() {
   nombreProducto = lecturaCodigo.nombreProducto;
   precioProducto = lecturaCodigo.precioProducto;
+  speak(
+      "producto: Nombre del producto: $nombreProducto precio aproximado: $precioProducto pesos");
+
   return Column(children: [
     Text('Nombre del producto $nombreProducto'),
     Text('Precio aproximado $precioProducto')

@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'HelloeyeSight',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Home(),
+      home: SignInScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
