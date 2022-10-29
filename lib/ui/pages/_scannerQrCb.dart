@@ -90,7 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _foundBarcode(Barcode barcode, MobileScannerArguments? args) {
+  Future<void> _foundBarcode(
+      Barcode barcode, MobileScannerArguments? args) async {
     /// open screen
     if (!_screenOpened) {
       final String code = barcode.rawValue ?? "---";
@@ -99,12 +100,14 @@ class _MyHomePageState extends State<MyHomePage> {
       debugPrint('Barcode found! $code');
 
       _screenOpened = true;
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                FoundCodeScreen(screenClosed: _screenWasClosed, value: code),
-          ));
+      await lecturaCodigo
+          .loadData(double.parse(codigo))
+          .then((value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FoundCodeScreen(
+                    screenClosed: _screenWasClosed, value: code),
+              )));
     }
   }
 
@@ -158,7 +161,7 @@ class _FoundCodeScreenState extends State<FoundCodeScreen> {
               SizedBox(
                 height: 20,
               ),
-              Producto(double.parse(codigo))
+              Producto()
             ],
           ),
         ),
@@ -167,12 +170,11 @@ class _FoundCodeScreenState extends State<FoundCodeScreen> {
   }
 }
 
-Widget Producto(var codigo) {
-  lecturaCodigo.loadData(codigo);
+Widget Producto() {
   nombreProducto = lecturaCodigo.nombreProducto;
   precioProducto = lecturaCodigo.precioProducto;
   return Column(children: [
     Text('Nombre del producto $nombreProducto'),
-    Text('Precio aproximado $nombreProducto')
+    Text('Precio aproximado $precioProducto')
   ]);
 }
