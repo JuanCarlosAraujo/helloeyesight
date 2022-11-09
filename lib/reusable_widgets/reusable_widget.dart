@@ -10,6 +10,16 @@ Image logoWidget(String imageName) {
   );
 }
 
+Image imageRecordatorio(String imageName) {
+  return Image.asset(
+    imageName,
+    fit: BoxFit.fitWidth,
+    width: 100,
+    height: 100,
+    //color: Colors.white,
+  );
+}
+
 TextField reusableTextField(String text, IconData icon, bool isPasswordType,
     TextEditingController controller) {
   return TextField(
@@ -65,4 +75,34 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
     ),
   );
+}
+
+class TextBox extends StatelessWidget {
+  final TextEditingController _controller;
+  final String _label;
+  TextBox(this._controller, this._label);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(15.0),
+      child: TextField(
+        controller: this._controller,
+        style:
+            TextStyle(color: Color.fromARGB(255, 43, 42, 42).withOpacity(0.9)),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30.0),
+                borderSide:
+                    const BorderSide(width: 1, style: BorderStyle.none)),
+            filled: true,
+            labelText: this._label,
+            suffix: GestureDetector(
+              child: Icon(Icons.close),
+              onTap: () {
+                _controller.clear();
+              },
+            )),
+      ),
+    );
+  }
 }
