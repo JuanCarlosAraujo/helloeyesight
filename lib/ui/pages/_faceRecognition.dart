@@ -57,13 +57,14 @@ class _FaceRecognitionState extends State<FaceRecognition> {
 
   Future<void> EnviarImagen(var imagen) async {
     String data = imagen.toString();
-    var response = await http.post(Uri.parse("http://localhost:5000/imagen"),
-        body: {"data": "hola"});
+    var response = await http.post(
+        Uri.parse("https://533f-181-78-11-206.ngrok.io/imagen"),
+        body: {"data": data});
   }
 
   Future<void> TraerResultado() async {
-    var response = await http
-        .get(Uri.parse("http://localhost:5000/reconocimiento_facial"));
+    var response = await http.get(
+        Uri.parse("https://533f-181-78-11-206.ngrok.io/reconocimiento_facial"));
     if (response.statusCode == 200) {
       Map jsonResponse = convert.jsonDecode(response.body);
       datosMapeados = jsonResponse;
