@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:helloeyesight/domain/modelo/modelo.dart';
 import 'package:helloeyesight/ui/pages/login.dart';
 import '../../utils/color_utils.dart';
+import 'package:camera/camera.dart';
+import 'dart:async';
+import 'package:helloeyesight/ui/pages/_faceRecognition.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -60,9 +63,24 @@ class _HomeState extends State<Home> {
                   //color: Colors.white,
                   ),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => Menu[index].nameRoute));
+                onPressed: () async {
+                  if (Menu[index].id == 1) {
+                    await availableCameras().then(
+                      (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FaceRecognition(
+                            cameras: value,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => Menu[index].nameRoute));
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -90,248 +108,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-
-/*
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Helloeyesight'),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'Camara',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Camara())),
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                
-                                'Recordatorio',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const Recordatorio2())),
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'Scanner',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Scanner())),
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'OPCION',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          print("BOTON: ")
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'OPCION',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          print("BOTON: ")
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'OPCION',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          print("BOTON: ")
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'OPCION',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          print("BOTON: ")
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Center(
-                              child: Text(
-                                'OPCION',
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.green,
-                        ),
-                        onPressed: () => {
-                          // para lanzar a otra ventana
-                          print("BOTON: ")
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}*/

@@ -56,13 +56,14 @@ class _FaceRecognitionState extends State<FaceRecognition> {
   }
 
   Future<void> EnviarImagen(var imagen) async {
-    var response = await http.post(Uri.parse("http://127.0.0.1:5000/imagen"),
-        body: {"imagen": imagen.toString()});
+    String data = imagen.toString();
+    var response = await http.post(Uri.parse("http://localhost:5000/imagen"),
+        body: {"data": "hola"});
   }
 
   Future<void> TraerResultado() async {
     var response = await http
-        .get(Uri.parse("http://127.0.0.1:5000/reconocimiento_facial"));
+        .get(Uri.parse("http://localhost:5000/reconocimiento_facial"));
     if (response.statusCode == 200) {
       Map jsonResponse = convert.jsonDecode(response.body);
       datosMapeados = jsonResponse;

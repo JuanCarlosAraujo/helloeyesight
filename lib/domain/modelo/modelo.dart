@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:helloeyesight/ui/pages/_camara.dart';
+import 'package:helloeyesight/ui/pages/_faceRecognition.dart';
 import 'package:helloeyesight/ui/pages/_scannerQrCb.dart';
 import '../../ui/pages/_recordatorios.dart';
+import 'package:camera/camera.dart';
+import 'dart:async';
 
 class Cliente {
   var nombre;
@@ -27,7 +29,7 @@ class Categoria {
 }
 
 final Menu = [
-  Categoria(1, "Camara", "face.png", Camara()),
+  Categoria(1, "Camara", "face.png", FaceRecognition()),
   Categoria(2, "Recordatorios", "reminders.png", Recordatorio2()),
   Categoria(3, "Scanear Productos", "qr-barcode.png", Scanner()),
   Categoria(4, "Scannear Moneda", "money.png", Scanner()),
