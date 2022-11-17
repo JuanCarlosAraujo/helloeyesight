@@ -1,70 +1,27 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:helloeyesight/domain/modelo/modeloFaceRecognition.dart';
-import 'package:helloeyesight/ui/pages/resultadosAPI.dart';
-import 'dart:convert' as convert;
+import 'package:helloeyesight/ui/pages/_camara.dart';
 import 'dart:async';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
+import 'dart:convert' as convert;
+import 'package:camera/camera.dart';
 
-File? imagen = null;
+FlutterTts flutterTts = FlutterTts();
 FaceInfo infoFace = FaceInfo();
 Map datosMapeados = {};
 
 class FaceRecognition extends StatefulWidget {
-  final List<CameraDescription>? cameras;
-  const FaceRecognition({this.cameras, Key? key}) : super(key: key);
+  const FaceRecognition({Key? key}) : super(key: key);
 
   @override
   _FaceRecognitionState createState() => _FaceRecognitionState();
 }
 
 class _FaceRecognitionState extends State<FaceRecognition> {
-  late CameraController controller;
-  XFile? pictureFile;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = CameraController(
-      widget.cameras![0],
-      ResolutionPreset.low,
-    );
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  Future<void> CapturarImagen() async {
-    var image = await controller.takePicture();
-    if (image != null) {
-      var imagen = File(image.path);
-      EnviarImagen(convert.base64Encode(imagen.readAsBytesSync()));
-
-      await TraerResultado().then((value) => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ResultadosAPI())));
-    }
-  }
-
-  Future<void> EnviarImagen(var imagen) async {
-    String data = imagen.toString();
-    var response = await http.post(
-        Uri.parse("https://533f-181-78-11-206.ngrok.io/imagen"),
-        body: {"data": data});
-  }
-
-  Future<void> TraerResultado() async {
+  Future<void> TraerResultado(BuildContext context) async {
     var response = await http.get(
-        Uri.parse("https://533f-181-78-11-206.ngrok.io/reconocimiento_facial"));
+        Uri.parse("https://0472-181-78-11-206.ngrok.io/reconocimiento_facial"));
     if (response.statusCode == 200) {
       Map jsonResponse = convert.jsonDecode(response.body);
       datosMapeados = jsonResponse;
@@ -77,28 +34,59 @@ class _FaceRecognitionState extends State<FaceRecognition> {
             raza: datosMapeados['raza']);
       }
     }
+
+    ImprimirResultado();
+  }
+
+  void ImprimirResultado() {
+    speak(
+        'Rasgos de la persona, su sexo es; ${infoFace.genero}, su edad aproximada es; ${infoFace.edad}, su actual emoción es;' +
+            '${infoFace.emocion}, su posible procedencia es; ${infoFace.raza}');
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return const SizedBox(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
+    TraerResultado(context);
     return Scaffold(
-      body: Stack(
-        children: [
-          CameraPreview(controller),
-          GestureDetector(
-            onTap: () {
-              CapturarImagen();
-            },
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Ruta de la Camara"),
+        ),
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+              Sexo(context),
+              Edad(context),
+              Emocion(context),
+              Raza(context),
+            ]))
+        //ada
+        );
   }
+}
+
+Widget Sexo(BuildContext context) {
+  return Text("SEXO: ${infoFace.genero}",
+      style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 53, 53, 53)));
+}
+
+Widget Edad(BuildContext context) {
+  return Text("EDAD: ${infoFace.edad}",
+      style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 53, 53, 53)));
+}
+
+Widget Emocion(BuildContext context) {
+  return Text("EMOCION: ${infoFace.emocion}",
+      style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 53, 53, 53)));
+}
+
+Widget Raza(BuildContext context) {
+  return Text("RAZA: ${infoFace.raza}",
+      style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 53, 53, 53)));
+}
+
+void speak(String texto) async {
+  await flutterTts.setLanguage('es-US');
+  await flutterTts.setPitch(1);
+  await flutterTts.speak(texto);
 }

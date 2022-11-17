@@ -11,7 +11,7 @@ import 'package:helloeyesight/ui/pages/login.dart';
 import '../../utils/color_utils.dart';
 import 'package:camera/camera.dart';
 import 'dart:async';
-import 'package:helloeyesight/ui/pages/_faceRecognition.dart';
+import 'package:helloeyesight/ui/pages/_camara.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -64,13 +64,14 @@ class _HomeState extends State<Home> {
                   ),
               child: ElevatedButton(
                 onPressed: () async {
-                  if (Menu[index].id == 1) {
+                  if (Menu[index].id != 2) {
                     await availableCameras().then(
                       (value) => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FaceRecognition(
+                          builder: (context) => Camara(
                             cameras: value,
+                            index: Menu[index].id,
                           ),
                         ),
                       ),

@@ -1,48 +1,95 @@
-//import 'package:helloeyesight/ui/pages/login.dart';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-//import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 import 'dart:io';
-import 'resultadosAPI.dart';
+import 'dart:convert' as convert;
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:helloeyesight/ui/pages/_faceRecognition.dart';
+import 'package:helloeyesight/ui/pages/_textRecognition.dart';
+
+File? imagen = null;
+int id = 0;
 
 class Camara extends StatefulWidget {
-  const Camara({super.key});
-
+  final List<CameraDescription>? cameras;
+  final index;
+  const Camara({this.cameras, this.index, Key? key}) : super(key: key);
   @override
   State<Camara> createState() => _Camara();
 }
 
 class _Camara extends State<Camara> {
-  File? imagen = null;
-  final picker = ImagePicker();
+  late CameraController controller;
+  XFile? pictureFile;
 
-  Future selImagen() async {
-    final ImagePicker _picker = ImagePicker();
-    var image = await _picker.pickImage(source: ImageSource.camera);
+  @override
+  void initState() {
+    super.initState();
+    controller = CameraController(
+      widget.cameras![0],
+      ResolutionPreset.low,
+    );
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> CapturarImagen() async {
+    var image = await controller.takePicture();
     if (image != null) {
       var imagen = File(image.path);
-      MandarResultado(convert.base64Encode(imagen.readAsBytesSync()));
+      EnviarImagen(convert.base64Encode(imagen.readAsBytesSync()))
+          .then((value) => CambiarVista());
     }
   }
 
-  Future<void> CambiarVista() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ResultadosAPI()));
+  void CambiarVista() {
+    if (widget.index == 1) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const FaceRecognition()));
+    } else if (widget.index == 5) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const TextRecognition()));
+    }
   }
 
-  Future<void> MandarResultado(var imagen) async {
+  Future<void> EnviarImagen(var imagen) async {
+    String data = imagen.toString();
     var response = await http.post(
-        Uri.parse("https://57ba-186-169-58-119.ngrok.io/proyectos%20php/datos"),
-        body: {"imagen": imagen.toString()});
+        Uri.parse("https://0472-181-78-11-206.ngrok.io/imagen"),
+        body: {"data": data});
   }
 
   @override
   Widget build(BuildContext context) {
-    CambiarVista();
-    return Container();
+    if (!controller.value.isInitialized) {
+      return const SizedBox(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    return Scaffold(
+      body: Stack(
+        children: [
+          CameraPreview(controller),
+          GestureDetector(
+            onTap: () {
+              CapturarImagen();
+            },
+          )
+        ],
+      ),
+    );
   }
 }
