@@ -53,20 +53,21 @@ class _Camara extends State<Camara> {
     }
   }
 
-  void CambiarVista() {
+  Future<void> CambiarVista() async {
     if (widget.index == 1) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const FaceRecognition()));
+      await TraerResultado(context).then((value) => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const FaceRecognition())));
     } else if (widget.index == 5) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const TextRecognition()));
+      await TraerResultadoDelTexto(context).then((value) => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const TextRecognition())));
     }
   }
 
   Future<void> EnviarImagen(var imagen) async {
     String data = imagen.toString();
     var response = await http.post(
-        Uri.parse("https://0472-181-78-11-206.ngrok.io/imagen"),
+        Uri.parse("https://f403-181-78-11-206.ngrok.io//imagen"),
         body: {"data": data});
   }
 

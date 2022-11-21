@@ -19,28 +19,8 @@ class TextRecognition extends StatefulWidget {
 }
 
 class _TextRecognitionState extends State<TextRecognition> {
-  Future<void> TraerResultado(BuildContext context) async {
-    var response = await http.get(
-        Uri.parse("https://0472-181-78-11-206.ngrok.io/reconocimiento_texto"));
-    if (response.statusCode == 200) {
-      Map jsonResponse = convert.jsonDecode(response.body);
-      datosMapeados = jsonResponse;
-      if (datosMapeados['text'] == null) {
-      } else {
-        respuesta = new Respuesta(texto: datosMapeados['text']);
-      }
-    }
-
-    ImprimirResultado();
-  }
-
-  void ImprimirResultado() {
-    speak(respuesta.texto);
-  }
-
   @override
   Widget build(BuildContext context) {
-    TraerResultado(context);
     return Scaffold(
         appBar: AppBar(
           title: Text("Ruta de la Camara"),
@@ -54,6 +34,25 @@ class _TextRecognitionState extends State<TextRecognition> {
         //ada
         );
   }
+}
+
+Future<void> TraerResultadoDelTexto(BuildContext context) async {
+  var response = await http.get(
+      Uri.parse("https://f403-181-78-11-206.ngrok.io/reconocimiento_texto"));
+  if (response.statusCode == 200) {
+    Map jsonResponse = convert.jsonDecode(response.body);
+    datosMapeados = jsonResponse;
+    if (datosMapeados['text'] == null) {
+    } else {
+      respuesta = new Respuesta(texto: datosMapeados['text']);
+    }
+  }
+
+  ImprimirResultado();
+}
+
+void ImprimirResultado() {
+  speak(respuesta.texto);
 }
 
 Widget Texto(BuildContext context) {

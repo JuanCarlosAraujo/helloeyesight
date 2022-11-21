@@ -3,6 +3,7 @@ import 'package:helloeyesight/domain/modelo/modeloFaceRecognition.dart';
 import 'package:helloeyesight/ui/pages/_camara.dart';
 import 'dart:async';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:helloeyesight/ui/pages/resultadosAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:camera/camera.dart';
@@ -19,34 +20,8 @@ class FaceRecognition extends StatefulWidget {
 }
 
 class _FaceRecognitionState extends State<FaceRecognition> {
-  Future<void> TraerResultado(BuildContext context) async {
-    var response = await http.get(
-        Uri.parse("https://0472-181-78-11-206.ngrok.io/reconocimiento_facial"));
-    if (response.statusCode == 200) {
-      Map jsonResponse = convert.jsonDecode(response.body);
-      datosMapeados = jsonResponse;
-      if (datosMapeados['genero'] == null) {
-      } else {
-        infoFace = new FaceInfo(
-            genero: datosMapeados['genero'],
-            edad: datosMapeados['edad'],
-            emocion: datosMapeados['emocion'],
-            raza: datosMapeados['raza']);
-      }
-    }
-
-    ImprimirResultado();
-  }
-
-  void ImprimirResultado() {
-    speak(
-        'Rasgos de la persona, su sexo es; ${infoFace.genero}, su edad aproximada es; ${infoFace.edad}, su actual emoción es;' +
-            '${infoFace.emocion}, su posible procedencia es; ${infoFace.raza}');
-  }
-
   @override
   Widget build(BuildContext context) {
-    TraerResultado(context);
     return Scaffold(
         appBar: AppBar(
           title: Text("Ruta de la Camara"),
@@ -63,6 +38,31 @@ class _FaceRecognitionState extends State<FaceRecognition> {
         //ada
         );
   }
+}
+
+Future<void> TraerResultado(BuildContext context) async {
+  var response = await http.get(
+      Uri.parse("https://f403-181-78-11-206.ngrok.io/reconocimiento_facial"));
+  if (response.statusCode == 200) {
+    Map jsonResponse = convert.jsonDecode(response.body);
+    datosMapeados = jsonResponse;
+    if (datosMapeados['genero'] == null) {
+    } else {
+      infoFace = new FaceInfo(
+          genero: datosMapeados['genero'],
+          edad: datosMapeados['edad'],
+          emocion: datosMapeados['emocion'],
+          raza: datosMapeados['raza']);
+    }
+  }
+
+  ImprimirResultado();
+}
+
+void ImprimirResultado() {
+  speak(
+      'Rasgos de la persona, su sexo es; ${infoFace.genero}, su edad aproximada es; ${infoFace.edad}, su actual emoción es;' +
+          '${infoFace.emocion}, su posible procedencia es; ${infoFace.raza}');
 }
 
 Widget Sexo(BuildContext context) {
