@@ -31,7 +31,7 @@ class Categoria {
 final Menu = [
   Categoria(1, "Camara", "face.png", Camara()),
   Categoria(2, "Recordatorios", "reminders.png", Recordatorio2()),
-  Categoria(3, "Scanear Productos", "qr-barcode.png", Camara()),
+  Categoria(3, "Scanear Productos", "qr-barcode.png", Scanner()),
   Categoria(4, "Scannear Moneda", "money.png", Camara()),
   Categoria(5, "Leer Texto", "read.png", Camara()),
   Categoria(6, "Vestimena", "vestimenta.png", Camara()),

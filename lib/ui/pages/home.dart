@@ -78,7 +78,12 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     );
-                  } else {
+                  } else if (Menu[index].id == 2) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => Menu[index].nameRoute));
+                  } else if (Menu[index].id == 3) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
