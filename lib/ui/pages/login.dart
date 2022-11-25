@@ -6,7 +6,6 @@ import 'package:helloeyesight/reusable_widgets/reusable_widget.dart';
 import 'package:helloeyesight/ui/pages/signup_screen.dart';
 import 'package:helloeyesight/ui/pages/reset_password.dart';
 import 'package:helloeyesight/ui/pages/_scannerQrCb.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -48,7 +47,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                forgetPassword(context),
                 forgetPassword(context),
                 firebaseUIButton(context, "Sign In", () {
                   FirebaseAuth.instance
