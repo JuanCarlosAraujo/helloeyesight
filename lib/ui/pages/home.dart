@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
                   ),
               child: ElevatedButton(
                 onPressed: () async {
-                  if (Menu[index].id != 2) {
+                  if (Menu[index].id != 2 && Menu[index].id != 3) {
                     await availableCameras().then(
                       (value) => Navigator.push(
                         context,
