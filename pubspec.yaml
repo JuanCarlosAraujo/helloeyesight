@@ -44,6 +44,14 @@ dependencies:
   camera: ^0.9.7+1
   path_provider: ^2.0.11
   flutter_tts: ^3.5.3
+  firebase_core: ^2.3.0
+  firebase_auth: ^4.1.4
+  shared_preferences: ^2.0.15
+  localstorage: ^4.0.0+1
+  firebase_storage: ^11.0.6
+  
+  #local_auth: ^2.1.0
+  #flutter_secure_storage: ^6.0.0
   
 
 dev_dependencies:

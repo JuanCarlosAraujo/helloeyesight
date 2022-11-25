@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:helloeyesight/ui/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:helloeyesight/domain/modelo/usuario.dart';
@@ -5,6 +6,7 @@ import 'package:helloeyesight/reusable_widgets/reusable_widget.dart';
 import 'package:helloeyesight/ui/pages/signup_screen.dart';
 import 'package:helloeyesight/ui/pages/reset_password.dart';
 import 'package:helloeyesight/ui/pages/_scannerQrCb.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -47,15 +49,19 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 5,
                 ),
                 forgetPassword(context),
-//---------------------------------------------------------------------------------------------
+                forgetPassword(context),
                 firebaseUIButton(context, "Sign In", () {
-                  if (user.user == _emailTextController.text &&
-                      user.pass == _passwordTextController.text) {
+                  FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: _emailTextController.text,
+                          password: _passwordTextController.text)
+                      .then((value) {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Home()));
-                  }
+                        MaterialPageRoute(builder: (context) => Home()));
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
                 }),
-//----------------------------------------------------------------------------------------------
                 signUpOption()
               ],
             ),

@@ -1,10 +1,8 @@
-//import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:firebase_signin/reusable_widgets/reusable_widget.dart';
-//import 'package:firebase_signin/screens/home_screen.dart';
-//import 'package:firebase_signin/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:helloeyesight/utils/color_utils.dart';
 import 'package:helloeyesight/reusable_widgets/reusable_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -33,7 +31,8 @@ class _ResetPasswordState extends State<ResetPassword> {
           decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
             hexStringToColor("00B4DB"),
-            hexStringToColor("0083B0")
+            hexStringToColor("0083B0"),
+            hexStringToColor("5E61F4")
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
           child: SingleChildScrollView(
               child: Padding(
@@ -48,7 +47,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                 const SizedBox(
                   height: 20,
                 ),
-                firebaseUIButton(context, "Reestablecer Contraseña", () {})
+                firebaseUIButton(context, "Reset Password", () {
+                  FirebaseAuth.instance
+                      .sendPasswordResetEmail(email: _emailTextController.text)
+                      .then((value) => Navigator.of(context).pop());
+                })
               ],
             ),
           ))),
