@@ -12,6 +12,10 @@ import '../../utils/color_utils.dart';
 import 'package:camera/camera.dart';
 import 'dart:async';
 import 'package:helloeyesight/ui/pages/_camara.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+
+//import 'package:audioplayers/audioplayers.dart';
+FlutterTts flutterTts = FlutterTts();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -66,6 +70,7 @@ class _HomeState extends State<Home> {
                   ),
               child: ElevatedButton(
                 onPressed: () async {
+                  speak("Abriendo ${Menu[index].nameCategria}");
                   if (Menu[index].id != 2 && Menu[index].id != 3) {
                     await availableCameras().then(
                       (value) => Navigator.push(
@@ -115,4 +120,10 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
+
+void speak(String texto) async {
+  await flutterTts.setLanguage('es-US');
+  await flutterTts.setPitch(1);
+  await flutterTts.speak(texto);
 }
