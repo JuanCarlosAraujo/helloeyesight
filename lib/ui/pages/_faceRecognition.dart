@@ -42,7 +42,7 @@ class _FaceRecognitionState extends State<FaceRecognition> {
 
 Future<void> TraerResultado(BuildContext context) async {
   var response = await http.get(
-      Uri.parse("https://4871-181-78-11-206.ngrok.io/reconocimiento_facial"));
+      Uri.parse("https://6f85-181-78-11-206.ngrok.io/reconocimiento_facial"));
   if (response.statusCode == 200) {
     Map jsonResponse = convert.jsonDecode(response.body);
     datosMapeados = jsonResponse;
