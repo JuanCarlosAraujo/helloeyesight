@@ -3,6 +3,12 @@ import 'package:helloeyesight/ui/crud_recordatorios/message_response.dart';
 import 'package:helloeyesight/ui/crud_recordatorios/modify_contact.dart';
 import 'package:helloeyesight/ui/crud_recordatorios/register_contact.dart';
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+
+stt.SpeechToText speech = stt.SpeechToText();
+bool available = false;
+String resultado = "";
 
 class Recordatorio2 extends StatefulWidget {
   //final String _title = 'asds';
@@ -13,12 +19,7 @@ class Recordatorio2 extends StatefulWidget {
 }
 
 class _recordatorio extends State<Recordatorio2> {
-  List<Recordatorio> Recordatorios = [
-    Recordatorio(name: '+++++++', descripcion: '------', fecha: '1969-07-20'),
-    Recordatorio(name: '+++++++', descripcion: '------', fecha: '1969-07-20'),
-    Recordatorio(name: '+++++++', descripcion: '------', fecha: '1969-07-20'),
-    Recordatorio(name: '+++++++', descripcion: '------', fecha: '1969-07-20')
-  ];
+  List<Recordatorio> Recordatorios = [];
 
   @override
   Widget build(BuildContext context) {
@@ -69,23 +70,46 @@ class _recordatorio extends State<Recordatorio2> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => RegisterContact()))
-              .then((newContact) {
-            if (newContact != null) {
-              setState(() {
-                Recordatorios.add(newContact);
-                messageResponse(
-                    context, newContact.name + " a sido guardado...!");
-              });
-            }
-          });
+        onPressed: () async {
+          available = await speech.initialize();
+          if (speech.isNotListening) {
+            speech.listen(onResult: Resultado, partialResults: false);
+          } else {
+            speech.stop();
+            print("makingvoice");
+          }
+          if (speech.isNotListening) {
+            GuardarRecordatorios();
+          }
         },
         tooltip: "Agregar Recordatorio",
-        child: Icon(Icons.notification_add),
+        child: Icon(Icons.mic),
       ),
     );
+  }
+
+  void Resultado(SpeechRecognitionResult result) {
+    setState(() {
+      resultado = result.recognizedWords;
+    });
+  }
+
+  Future<void> GuardarRecordatorios() async {
+    await Future.delayed(Duration(seconds: 7));
+    String hora = "";
+    hora = resultado.split(" las ")[1];
+    if (resultado != null) {
+      Recordatorio recordatorio =
+          Recordatorio(name: resultado, descripcion: "-", fecha: hora);
+      setState(() {
+        Recordatorios.add(recordatorio);
+        messageResponse(context, resultado + " a sido guardado...!");
+      });
+    }
+  }
+
+  Future ResultListener() async {
+    resultado = await speech.lastRecognizedWords;
   }
 
   removeRecordatorio(BuildContext context, Recordatorio Recordatorio) {
