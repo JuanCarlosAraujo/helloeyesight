@@ -9,6 +9,7 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 stt.SpeechToText speech = stt.SpeechToText();
 bool available = false;
 String resultado = "";
+List<Recordatorio> Recordatorios = [];
 
 class Recordatorio2 extends StatefulWidget {
   //final String _title = 'asds';
@@ -19,8 +20,6 @@ class Recordatorio2 extends StatefulWidget {
 }
 
 class _recordatorio extends State<Recordatorio2> {
-  List<Recordatorio> Recordatorios = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
