@@ -82,7 +82,7 @@ class _recordatorio extends State<Recordatorio2> {
             GuardarRecordatorios();
           }
         },
-        tooltip: "Agregar Recordatorio",
+        tooltip: "Agregar Recordatorio por medio de voz",
         child: Icon(Icons.mic),
       ),
     );
