@@ -20,6 +20,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final TextEditingController controluser = TextEditingController();
   final TextEditingController controlpass = TextEditingController();
+
+  bool showError = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,11 +59,24 @@ class _SignInScreenState extends State<SignInScreen> {
                       .then((value) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Home()));
-                  }).onError((error, stackTrace) {
+                  }).catchError((error) {
+                    setState(() {
+                      showError = true;
+                    });
                     print("Error ${error.toString()}");
+                    Future.delayed(Duration(seconds: 3), () {
+                      setState(() {
+                        showError = false;
+                      });
+                    });
                   });
                 }),
-                signUpOption()
+                signUpOption(),
+                showError
+                    ? AlertDialog(
+                        title: Text('Usuario no registrado'),
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
