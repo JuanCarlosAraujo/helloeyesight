@@ -38,7 +38,7 @@ class _TextRecognitionState extends State<TextRecognition> {
 
 Future<void> TraerResultadoDelTexto(BuildContext context) async {
   var response = await http.get(Uri.parse(
-      "https://b792-181-78-11-206.ngrok-free.app/reconocimiento_texto"));
+      "https://e2bb-181-78-11-206.ngrok-free.app/reconocimiento_texto"));
   if (response.statusCode == 200) {
     Map jsonResponse = convert.jsonDecode(response.body);
     datosMapeados = jsonResponse;

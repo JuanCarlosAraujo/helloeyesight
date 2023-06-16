@@ -40,7 +40,7 @@ class _ObjetsRecognition extends State<ObjetsRecognition> {
 
 Future<void> TraerResultadoObjeto(BuildContext context) async {
   var response = await http.get(
-      Uri.parse("https://b792-181-78-11-206.ngrok-free.app/deteccion_objetos"));
+      Uri.parse("https://e2bb-181-78-11-206.ngrok-free.app/deteccion_objetos"));
   if (response.statusCode == 200) {
     Map jsonResponse = convert.jsonDecode(response.body);
     objeto = jsonResponse;

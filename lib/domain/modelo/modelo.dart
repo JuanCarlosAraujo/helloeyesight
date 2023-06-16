@@ -34,5 +34,5 @@ final Menu = [
   Categoria(3, "Scanear Productos", "qr-barcode.png", Scanner()),
   Categoria(4, "Scannear Moneda", "money.png", Camara()),
   Categoria(5, "Leer Texto", "read.png", Camara()),
-  Categoria(6, "Reconocimiento Objetos", "objetos.png", Camara()),
+  Categoria(6, "Reconocer Objetos", "objetos.png", Camara()),
 ];
