@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:helloeyesight/ui/pages/_faceRecognition.dart';
 import 'package:helloeyesight/ui/pages/_textRecognition.dart';
+import 'package:helloeyesight/ui/pages/_moneyRecognition.dart';
+import 'package:helloeyesight/ui/pages/_objetsRecognition.dart';
 
 File? imagen = null;
 int id = 0;
@@ -60,6 +62,14 @@ class _Camara extends State<Camara> {
       await TraerResultadoDelTexto(context).then((value) => Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const TextRecognition())));
+    } else if (widget.index == 4) {
+      await TraerResultadoBillete(context).then((value) => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MoneyRecognition())));
+    } else if (widget.index == 6) {
+      await TraerResultadoObjeto(context).then((value) => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ObjetsRecognition())));
     }
   }
 
