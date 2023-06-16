@@ -37,12 +37,13 @@ class _TextRecognitionState extends State<TextRecognition> {
 }
 
 Future<void> TraerResultadoDelTexto(BuildContext context) async {
-  var response = await http.get(
-      Uri.parse("https://6f85-181-78-11-206.ngrok.io/reconocimiento_texto"));
+  var response = await http.get(Uri.parse(
+      "https://b792-181-78-11-206.ngrok-free.app/reconocimiento_texto"));
   if (response.statusCode == 200) {
     Map jsonResponse = convert.jsonDecode(response.body);
     datosMapeados = jsonResponse;
     if (datosMapeados['text'] == null) {
+      respuesta = new Respuesta(texto: "error, intente nuevamente");
     } else {
       respuesta = new Respuesta(texto: datosMapeados['text']);
     }
