@@ -45,7 +45,7 @@ dependencies:
   path_provider: ^2.0.11
   flutter_tts: ^3.5.3
   firebase_core: ^2.3.0
-  firebase_auth: ^4.1.4
+  firebase_auth: ^4.6.3
   speech_to_text: ^6.1.1
   #shared_preferences: ^2.0.15
   #localstorage: ^4.0.0+1
