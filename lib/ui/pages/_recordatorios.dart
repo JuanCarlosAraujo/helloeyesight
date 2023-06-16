@@ -78,9 +78,7 @@ class _recordatorio extends State<Recordatorio2> {
             speech.stop();
             print("makingvoice");
           }
-          if (speech.isNotListening) {
-            GuardarRecordatorios();
-          }
+          GuardarRecordatorios();
         },
         tooltip: "Agregar Recordatorio por medio de voz",
         child: Icon(Icons.mic),
